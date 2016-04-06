@@ -1,8 +1,9 @@
 angular-translate bower component to help to enable multilingual feature to the formio-forms.
 --------------------------------------------------------------------------------------------------------------------
-app.js
-======
+**app.js**
+
 Decleare language constants
+```
 .constant('LOCALES', {
   'locales': {
       'ru': 'Русский',
@@ -11,10 +12,10 @@ Decleare language constants
   },
   'preferredLocale': 'en_US'
 })
+```
 
+**index.html**
 
-index.html
-==========
 Add:
 ```
 <script src="../bower_components/formio-translate/src/formio-translate.js"></script>
@@ -26,7 +27,7 @@ Add:
 ```
 
 **Add "app/resources/lang/" with language files eg. en.json, ar.json etc**
-
+```
 {
     "views.myapp.Splendid!": "Behatareen!",
     "directives.language-select.Language": "Language",
@@ -34,4 +35,4 @@ Add:
     "Password": "Password",
     "Submit": "Submit"
 }
- 
+```
