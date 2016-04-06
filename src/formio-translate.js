@@ -6,6 +6,7 @@ angular.module('formioTranslate', ['pascalprecht.translate','tmh.dynamicLocale']
       prefix: 'app/resources/lang/',// path to translations files
       suffix: '.json'// suffix, currently- extension of the translations
     });
+    $translateProvider.useSanitizeValueStrategy('escape'); //escapes HTML in the translation
     $translateProvider.preferredLanguage('en');// is applied on first load
     //$translateProvider.useLocalStorage();// saves selected language to localStorage
 
