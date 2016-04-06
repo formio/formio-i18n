@@ -21,7 +21,7 @@ Add:
 <script src="../bower_components/formio-translate/src/formio-translate.js"></script>
 ```
 
-**Include directive to load supported language list in dropdown:**
+**Include directive to load supported language list in dropdown on a form page:**
 ```
  <div ng-translate-language-select></div>
 ```
@@ -29,8 +29,6 @@ Add:
 **Add "app/resources/lang/" with language files eg. en.json, ar.json etc**
 ```
 {
-    "views.myapp.Splendid!": "Behatareen!",
-    "directives.language-select.Language": "Language",
     "Email": "Email",
     "Password": "Password",
     "Submit": "Submit"
