@@ -9,7 +9,7 @@ angular.module('formioTranslate', ['pascalprecht.translate','tmh.dynamicLocale']
     $translateProvider.preferredLanguage('en');// is applied on first load
     //$translateProvider.useLocalStorage();// saves selected language to localStorage
 
-    tmhDynamicLocaleProvider.localeLocationPattern('bower_components/formio-translate/bower_component/angular-i18n/angular-locale_en.js');
+    tmhDynamicLocaleProvider.localeLocationPattern('bower_components/formio-translate/bower_components/angular-i18n/angular-locale_en.js');
   }])
   .directive('ngTranslateLanguageSelect', function (LocaleService) { 'use strict';
   return {
