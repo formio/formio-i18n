@@ -1,4 +1,4 @@
-angular-translate bower component to help to enable multilingual feature to the formio-forms.
+Let's enhance your formio forms with multilingual feature with the help of formio-translate bower component.
 --------------------------------------------------------------------------------------------------------------------
 **app.js**
 
