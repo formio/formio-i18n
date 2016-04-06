@@ -1,5 +1,17 @@
-angular.module('formioTranslate', [])
-    .directive('ngTranslateLanguageSelect', function (LocaleService) { 'use strict';
+angular.module('formioTranslate', ['pascalprecht.translate','tmh.dynamicLocale'])
+  .config(['$translateProvider','tmhDynamicLocaleProvider', function($translateProvider, tmhDynamicLocaleProvider){
+    $translateProvider.useMissingTranslationHandlerLog();
+
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'app/resources/lang/',// path to translations files
+      suffix: '.json'// suffix, currently- extension of the translations
+    });
+    $translateProvider.preferredLanguage('en');// is applied on first load
+    //$translateProvider.useLocalStorage();// saves selected language to localStorage
+
+    tmhDynamicLocaleProvider.localeLocationPattern('bower_components/formio-translate/bower_component/angular-i18n/angular-locale_en.js');
+  }])
+  .directive('ngTranslateLanguageSelect', function (LocaleService) { 'use strict';
   return {
     restrict: 'A',
     replace: true,
