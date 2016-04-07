@@ -1,4 +1,4 @@
-angular.module('formioTranslate', ['pascalprecht.translate','tmh.dynamicLocale'])
+angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale'])
   .config(['$translateProvider','tmhDynamicLocaleProvider', function($translateProvider, tmhDynamicLocaleProvider){
     $translateProvider.useMissingTranslationHandlerLog();
 
@@ -10,7 +10,7 @@ angular.module('formioTranslate', ['pascalprecht.translate','tmh.dynamicLocale']
     $translateProvider.preferredLanguage('en');// is applied on first load
     //$translateProvider.useLocalStorage();// saves selected language to localStorage
 
-    tmhDynamicLocaleProvider.localeLocationPattern('bower_components/formio-translate/bower_components/angular-i18n/angular-locale_en.js');
+    tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_en.js');
   }])
   .directive('ngTranslateLanguageSelect', function (LocaleService) { 'use strict';
   return {
@@ -22,14 +22,13 @@ angular.module('formioTranslate', ['pascalprecht.translate','tmh.dynamicLocale']
             '{{"directives.language-select.Language" | translate}}:'+
             '<select ng-model="currentLocaleDisplayName"'+
                 'ng-options="localesDisplayName for localesDisplayName in localesDisplayNames"'+
-                'ng-change="changeLanguage(currentLocaleDisplayName, frm)">'+
+                'ng-change="changeLanguage(currentLocaleDisplayName)">'+
             '</select>'+
         '</label>'+
     '</div>'+
     '',
     controller: function ($scope) {
       $scope.currentLocaleDisplayName = LocaleService.getLocaleDisplayName();
-
       $scope.localesDisplayNames = LocaleService.getLocalesDisplayNames();
       $scope.visible = $scope.localesDisplayNames && $scope.localesDisplayNames.length > 1;
       $scope.changeLanguage = function (locale) {
@@ -38,7 +37,7 @@ angular.module('formioTranslate', ['pascalprecht.translate','tmh.dynamicLocale']
     }
   };
 })
-  .service('LocaleService', function ($translate, LOCALES, $rootScope, tmhDynamicLocale) {
+  .service('LocaleService', function ($translate, LOCALES, $rootScope, tmhDynamicLocale, $state) {
     'use strict';
     // PREPARING LOCALES INFO
     var localesObj = LOCALES.locales;
@@ -71,6 +70,7 @@ angular.module('formioTranslate', ['pascalprecht.translate','tmh.dynamicLocale']
       // asking angular-translate to load and apply proper translations
      
       $translate.use(locale);
+      $state.reload();
     };
     
     // EVENTS

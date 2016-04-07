@@ -1,7 +1,11 @@
 Let's enhance your formio forms with multilingual feature with the help of formio-translate bower component.
 --------------------------------------------------------------------------------------------------------------------
 **app.js**
-
+```
+angular.module('formioAppBasic', [
+  'ngformioTranslate' //Custom formio translate component
+]);
+```
 Decleare language constants
 ```
 .constant('LOCALES', {
