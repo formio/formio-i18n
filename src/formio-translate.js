@@ -32,6 +32,7 @@ angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale
       $scope.localesDisplayNames = LocaleService.getLocalesDisplayNames();
       $scope.visible = $scope.localesDisplayNames && $scope.localesDisplayNames.length > 1;
       $scope.changeLanguage = function (locale) {
+        console.log(locale);
         LocaleService.setLocaleByDisplayName(locale);
       };
     }
