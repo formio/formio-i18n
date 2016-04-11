@@ -22,9 +22,6 @@ Decleare language constants
 
 Add:
 ```
-<script src="config.js" type="text/javascript"></script>
-```
-```
 <script src="../bower_components/angular-translate/angular-translate.js"></script>
 ```
 ```
