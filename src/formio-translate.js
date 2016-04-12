@@ -70,7 +70,6 @@ angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale
     // asking angular-translate to load and apply proper translations
     $translate.use(locale);
     $state.reload();
-
   };
   
   // EVENTS
