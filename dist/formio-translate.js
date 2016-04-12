@@ -21,7 +21,7 @@ angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale
     template: ''+
     '<div class="language-select" ng-if="visible">'+
       '<label>'+
-        '{{"directives.language-select.Language" | translate}}:'+
+        '{{"Language" | formioTranslate}}:'+
         '<select ng-model="currentLocaleDisplayName"'+
           'ng-options="localesDisplayName for localesDisplayName in localesDisplayNames"'+
           'ng-change="changeLanguage(currentLocaleDisplayName)">'+
