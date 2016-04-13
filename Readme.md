@@ -9,12 +9,24 @@ angular.module('formioAppBasic', [
 Decleare language constants
 ```
 .constant('LOCALES', {
-  'locales': {
-      'ru': 'Русский',
-      'en': 'English',
-      'ar': 'Arabian'
-  },
-  'preferredLocale': 'en'
+  'languages': [
+    {
+      'locales': 'ru', 
+      'name': 'Русский', 
+      'rtl': false
+    },
+    {
+      'locales': 'en', 
+      'name': 'English', 
+      'rtl': false
+    },
+    {
+      'locales': 'ar', 
+      'name': 'Arabian', 
+      'rtl': true
+    }
+ ],
+ 'preferredLocale': 'en'
 })
 ```
 
@@ -37,4 +49,10 @@ Add:
     "Password": "Password",
     "Submit": "Submit"
 }
+```
+
+** To set an alignment (Right or Left) of a text for some special languages like Arabian.. etc, please add the following attribute in a div**
+
+```
+<div dir={{languageRtl}}>
 ```

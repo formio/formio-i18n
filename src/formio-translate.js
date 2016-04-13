@@ -12,15 +12,16 @@ angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale
 
     tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_en.js');
   }])
-  .directive('ngTranslateLanguageSelect', function (LocaleService) { 'use strict';
+  .directive('ngTranslateLanguageSelect', function (LocaleService) { 
+  'use strict';
   return {
     restrict: 'A',
     replace: true,
     template: ''+
     '<div class="language-select" ng-if="visible">'+
       '<label>'+
-        '{{"Language" | formioTranslate}}:'+
-        '<select ng-model="currentLocaleDisplayName"'+
+        '{{"Language" | translate}}:'+
+        '<select class="language-dropdown" ng-model="currentLocaleDisplayName"'+
           'ng-options="localesDisplayName for localesDisplayName in localesDisplayNames"'+
           'ng-change="changeLanguage(currentLocaleDisplayName)">'+
         '</select>'+
@@ -28,33 +29,42 @@ angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale
     '</div>'+
     '',
     controller: function ($scope) {
+
       $scope.currentLocaleDisplayName = LocaleService.getLocaleDisplayName();
       $scope.localesDisplayNames = LocaleService.getLocalesDisplayNames();
       $scope.visible = $scope.localesDisplayNames && $scope.localesDisplayNames.length > 1;
       $scope.changeLanguage = function (locale) {
         LocaleService.setLocaleByDisplayName(locale);
       };
+      $scope.languageRtl = LocaleService.getLocaleRTL();
     }
   };
 })
 .service('LocaleService', function ($translate, LOCALES, $rootScope, tmhDynamicLocale, $state) {
   'use strict';
   // PREPARING LOCALES INFO
-  var localesObj = LOCALES.locales;
+  var localesObj = LOCALES.languages;
+  var _LOCALES = [];
+  var _LOCALES_DISPLAY_NAMES = [];
+  var _LOCALES_RTL = [];
 
-  // locales and locales display names
-  var _LOCALES = Object.keys(localesObj);
+  localesObj.forEach(function(loc){
+    _LOCALES.push(loc['locales']);
+    _LOCALES_DISPLAY_NAMES.push(loc['name']);
+    _LOCALES_RTL.push(loc['rtl']);
+  });
+
   if (!_LOCALES || _LOCALES.length === 0) {
     console.error('There are no _LOCALES provided');
   }
-  var _LOCALES_DISPLAY_NAMES = [];
-  _LOCALES.forEach(function (locale) {
-    _LOCALES_DISPLAY_NAMES.push(localesObj[locale]);
-  });
-  
+
   // STORING CURRENT LOCALE
   var currentLocale = $translate.proposedLanguage();// because of async loading
-  
+
+  var currentLang = _LOCALES_DISPLAY_NAMES[_LOCALES.indexOf(currentLocale)];
+
+  var currentRtl;
+
   // METHODS
   var checkLocaleIsValid = function (locale) {
     return _LOCALES.indexOf(locale) !== -1;
@@ -65,11 +75,22 @@ angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale
       console.error('Locale name "' + locale + '" is invalid');
       return;
     }
+    
     currentLocale = locale;// updating current locale
-   
+    currentLang = _LOCALES_DISPLAY_NAMES[_LOCALES.indexOf(locale)];
+    currentRtl = _LOCALES_RTL[_LOCALES.indexOf(locale)];
+    if(_LOCALES_RTL[_LOCALES.indexOf(locale)] == true) {
+      currentRtl = 'rtl';
+    }
+    $rootScope.languageRtl = currentRtl;
+    $rootScope.currentLocaleDisplayName = currentLang;
+
+    
+
     // asking angular-translate to load and apply proper translations
     $translate.use(locale);
     $state.reload();
+
   };
   
   // EVENTS
@@ -83,7 +104,10 @@ angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale
   
   return {
     getLocaleDisplayName: function () {
-      return localesObj[currentLocale];
+      return currentLang;
+    },
+    getLocaleRTL: function () {
+      return currentRtl;
     },
     setLocaleByDisplayName: function (localeDisplayName) {
       return setLocale(
