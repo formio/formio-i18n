@@ -1,7 +1,7 @@
 angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale'])
   .config(['$translateProvider','tmhDynamicLocaleProvider', function($translateProvider, tmhDynamicLocaleProvider){
     $translateProvider.useMissingTranslationHandlerLog();
-
+    $translateProvider.useMissingTranslationHandler('missingTranslationHandler');
     $translateProvider.useStaticFilesLoader({
       prefix: 'app/resources/lang/',// path to translations files
       suffix: '.json'// suffix, currently- extension of the translations
@@ -38,6 +38,13 @@ angular.module('ngformioTranslate', ['pascalprecht.translate','tmh.dynamicLocale
       };
       $scope.languageRtl = LocaleService.getLocaleRTL();
     }
+  };
+})
+.factory('missingTranslationHandler', function () {
+  return function (translationID, uses) {
+    // return the following text as a translation 'result' - this will be
+    // displayed instead of the language key.
+    return translationID;
   };
 })
 .service('LocaleService', function ($translate, LOCALES, $rootScope, tmhDynamicLocale, $state) {
